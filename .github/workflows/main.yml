@@ -1,0 +1,18 @@
+name: Main CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: SonarCloud Scan
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=davidson-consulting -Dsonar.projectKey=davidson-consulting_diff-jjoules -Dsonar.branch=main -Dsonar.sources=src/main/java/ -Dsonar.language=java -Dsonar.java.binaries=target/classes -Dcheckstyle.skip=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Codecov
+        uses: codecov/codecov-action@v1.5.2
