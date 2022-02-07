@@ -36,15 +36,15 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
             commandLine.usage(System.err);
-            System.exit(11);
+            System.exit(1);
         }
         if (commandLine.isUsageHelpRequested()) {
             commandLine.usage(System.out);
-            System.exit(11);
+            System.exit(0);
         }
         if (commandLine.isVersionHelpRequested()) {
             commandLine.printVersionHelp(System.out);
-            System.exit(11);
+            System.exit(0);
         }
         main.run();
     }
