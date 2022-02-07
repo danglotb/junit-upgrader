@@ -48,12 +48,15 @@ public class Utils {
     public static final String PREFIX_TEST_JUNIT3 = "test";
 
     public static boolean isJUnit3WithLookUp(CtType<?> candidate) {
-        return isJUnit3(candidate) || (candidate.getSuperclass() != null && isJUnit3WithLookUp(candidate.getSuperclass().getTypeDeclaration()));
+        return isJUnit3(candidate) || (isCandidateToIsJUnit3(candidate) && isJUnit3WithLookUp(candidate.getSuperclass().getTypeDeclaration()));
     }
 
     public static boolean isJUnit3(CtType<?> candidate) {
-        return (candidate.getSuperclass() != null &&
-                FULL_QUALIFIED_NAME_TESTCASE_NAME.equals(candidate.getSuperclass().getQualifiedName()));
+        return (isCandidateToIsJUnit3(candidate) && FULL_QUALIFIED_NAME_TESTCASE_NAME.equals(candidate.getSuperclass().getQualifiedName()));
+    }
+
+    private static boolean isCandidateToIsJUnit3(CtType<?> candidate) {
+        return candidate != null && candidate.getSuperclass() != null && !candidate.isAnonymous();
     }
 
     public static void replaceAnnotation(
