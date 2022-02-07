@@ -6,8 +6,6 @@ import spoon.reflect.reference.CtPackageReference;
 import spoon.reflect.reference.CtTypeReference;
 import spoon.reflect.visitor.filter.TypeFilter;
 
-import java.util.function.Predicate;
-
 /**
  * @author Benjamin DANGLOT
  * benjamin.danglot@davidson.fr
