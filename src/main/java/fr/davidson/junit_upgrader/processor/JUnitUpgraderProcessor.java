@@ -1,8 +1,8 @@
 package fr.davidson.junit_upgrader.processor;
 
+import fr.davidson.junit_upgrader.utils.Utils;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtBlock;
-import spoon.reflect.code.CtBodyHolder;
 import spoon.reflect.code.CtInvocation;
 import spoon.reflect.code.CtSuperAccess;
 import spoon.reflect.declaration.*;
@@ -20,39 +20,25 @@ import java.util.List;
  */
 public class JUnitUpgraderProcessor extends AbstractProcessor<CtClass<?>> {
 
-    public static final String ORG_JUNIT_JUPITER_API = "org.junit.jupiter.api";
-
-    public static final String ASSERTIONS = "Assertions";
-    public static final String JUNIT_FRAMEWORK_TEST_CASE = "junit.framework.TestCase";
-
-    private boolean isJUnit3WithLookUp(CtType<?> candidate) {
-        return isJUnit3(candidate) || (candidate.getSuperclass() != null && isJUnit3WithLookUp(candidate.getSuperclass().getTypeDeclaration()));
-    }
-
-    private boolean isJUnit3(CtType<?> candidate) {
-        return (candidate.getSuperclass() != null &&
-                "junit.framework.TestCase".equals(candidate.getSuperclass().getQualifiedName()));
-    }
-
     @Override
     public void process(CtClass<?> ctClass) {
         final Factory factory = ctClass.getFactory();
         final CtPackage jupiterApiPackage = factory.createPackage();
-        jupiterApiPackage.setSimpleName(ORG_JUNIT_JUPITER_API);
+        jupiterApiPackage.setSimpleName(Utils.ORG_JUNIT_JUPITER_API);
         final CtPackageReference jupiterApiPackageReference = jupiterApiPackage.getReference();
 
-        if (isJUnit3WithLookUp(ctClass)) {
+        if (Utils.isJUnit3WithLookUp(ctClass)) {
             junit3Transformation(ctClass, jupiterApiPackage);
         }
 
         // Common JUnit 3 and JUnit 4 : replace Assertions
-        this.replaceAssertionsClass(ctClass, jupiterApiPackageReference, JUNIT_FRAMEWORK_TEST_CASE);
+        this.replaceAssertionsClass(ctClass, jupiterApiPackageReference, Utils.JUNIT_FRAMEWORK_TEST_CASE);
     }
 
     private void junit3Transformation(CtClass<?> ctClass, CtPackage jupiterApiPackage) {
         // JUnit 3 Transformation
         // Remove extends TestCase
-        if (isJUnit3(ctClass)) {
+        if (Utils.isJUnit3(ctClass)) {
             ctClass.getElements(new TypeFilter<>(CtInvocation.class) {
                 @Override
                 public boolean matches(CtInvocation candidate) {
@@ -116,7 +102,7 @@ public class JUnitUpgraderProcessor extends AbstractProcessor<CtClass<?>> {
                 return fullQualifiedNameToReplace.equals(element.getQualifiedName());
             }
         }).forEach(ctTypeReference -> {
-            ctTypeReference.setSimpleName(ASSERTIONS);
+            ctTypeReference.setSimpleName(Utils.ASSERTIONS);
             ctTypeReference.setPackage(jupiterApiPackageReference);
         });
     }
