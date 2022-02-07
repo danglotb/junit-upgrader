@@ -21,6 +21,8 @@ public class JUnitUpgraderProcessorTest {
     public static final String[] CLASS_NAMES = new String[]{
             "ChildJUnit3TestCode",
             "JUnit3TestCode",
+            "JUnit4TestCode",
+            "ChildJUnit4TestCode",
     };
 
     public static final String RESOURCES = "src/test/resources/";
