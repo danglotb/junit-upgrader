@@ -1,4 +1,4 @@
-package fr.davidson.junit_upgrader;
+package fr.davidson.junit_upgrader.processor;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtBlock;

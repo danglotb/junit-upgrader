@@ -1,5 +1,6 @@
-package fr.davidson.junit_upgrader;
+package fr.davidson.junit_upgrader.processor;
 
+import fr.davidson.junit_upgrader.processor.JUnitUpgraderProcessor;
 import org.junit.jupiter.api.Test;
 import spoon.Launcher;
 import spoon.reflect.declaration.CtClass;
