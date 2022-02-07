@@ -19,12 +19,32 @@ public class Main {
     )
     private String inputPath;
 
+
+    @CommandLine.Option(
+            names = "--should-output",
+            description = "Specify if we should output the java files or not.",
+            defaultValue = "false"
+    )
+    private boolean shouldOutput;
+
+    @CommandLine.Option(
+            names = "--output-path",
+            description = "Specify the path to the folder where output the java files, in case should-output is enabled.",
+            defaultValue = "spooned"
+    )
+    private String outputPath;
+
     public void run() {
         Launcher launcher = new Launcher();
         launcher.addInputResource(this.inputPath);
         launcher.getEnvironment().setNoClasspath(true);
         launcher.addProcessor(new JUnitUpgraderProcessor());
-        launcher.run();
+        launcher.buildModel();
+        launcher.process();
+        if (this.shouldOutput) {
+            launcher.setSourceOutputDirectory(this.outputPath);
+            launcher.prettyprint();
+        }
     }
 
     public static void main(String[] args) {
