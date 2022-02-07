@@ -6,6 +6,8 @@ import spoon.reflect.reference.CtPackageReference;
 import spoon.reflect.reference.CtTypeReference;
 import spoon.reflect.visitor.filter.TypeFilter;
 
+import java.util.function.Predicate;
+
 /**
  * @author Benjamin DANGLOT
  * benjamin.danglot@davidson.fr
@@ -13,21 +15,37 @@ import spoon.reflect.visitor.filter.TypeFilter;
  */
 public class Utils {
 
-    public static final String BEFORE_EACH_ANNOTATION_NAME = "BeforeEach";
-
-    public static final String AFTER_EACH_ANNOTATION_NAME = "AfterEach";
-
     public static final String ORG_JUNIT_JUPITER_API_PACKAGE_NAME = "org.junit.jupiter.api";
 
-    public static final String ASSERTIONS_CLASS_NAME = "Assertions";
+    public static final String ORG_JUNIT_PACKAGE_NAME = "org.junit";
 
     public static final String FULL_QUALIFIED_NAME_TESTCASE_NAME = "junit.framework.TestCase";
 
+    public static final String BEFORE_EACH_ANNOTATION_NAME = "BeforeEach";
+
+    public static final String BEFORE_ANNOTATION_NAME = "Before";
+
+    public static final String BEFORE_ANNOTATION_JUNIT4_FULL_QUALIFIED_NAME = String.join(".", ORG_JUNIT_PACKAGE_NAME, BEFORE_ANNOTATION_NAME);
+
+    public static final String BEFORE_CLASS_ANNOTATION_NAME = "BeforeClass";
+
+    public static final String AFTER_EACH_ANNOTATION_NAME = "AfterEach";
+
+    public static final String AFTER_ANNOTATION_NAME = "After";
+
+    public static final String AFTER_ANNOTATION_JUNIT4_FULL_QUALIFIED_NAME = String.join(".", ORG_JUNIT_PACKAGE_NAME, AFTER_ANNOTATION_NAME);
+
+    public static final String AFTER_CLASS_ANNOTATION_NAME = "AfterClass";
+
+    public static final String ASSERTIONS_CLASS_NAME = "Assertions";
+
     public static final String FULL_QUALIFIED_NAME_ASSERT_NAME = "org.junit.Assert";
 
-    public static final String OVERRIDE_ANNOTATION_NAME = "java.lang.Override";
+    public static final String OVERRIDE_ANNOTATION_FULL_QUALIFIED_NAME = "java.lang.Override";
 
-    public static final String JUNIT5_TEST_ANNOTATION_NAME = "Test";
+    public static final String TEST_ANNOTATION_NAME = "Test";
+
+    public static final String JUNIT4_TEST_ANNOTATION_FULL_QUALIFIED_NAME = String.join(".", ORG_JUNIT_PACKAGE_NAME, TEST_ANNOTATION_NAME);
 
     public static final String PREFIX_TEST_JUNIT3 = "test";
 
@@ -44,13 +62,13 @@ public class Utils {
             final CtMethod<?> method,
             final CtPackage jupiterApiPackage,
             final String annotationNameToAdd,
-            final String annotationNameToRemove) {
+            final String annotationFullQualifiedNameToRemove) {
         final Factory factory = method.getFactory();
         final CtTypeReference annotationType = factory.createAnnotationType(jupiterApiPackage, annotationNameToAdd).getReference();
         final CtAnnotation<?> annotation = factory.createAnnotation(annotationType);
         method.getAnnotations()
                 .stream()
-                .filter(ctAnnotation -> annotationNameToRemove.equals(ctAnnotation.getAnnotationType().getQualifiedName()))
+                .filter(ctAnnotation -> annotationFullQualifiedNameToRemove.equals(ctAnnotation.getAnnotationType().getQualifiedName()))
                 .findFirst()
                 .ifPresentOrElse(
                         ctAnnotation -> ctAnnotation.replace(annotation),

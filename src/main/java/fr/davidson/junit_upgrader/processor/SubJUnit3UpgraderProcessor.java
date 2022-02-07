@@ -49,17 +49,17 @@ public class SubJUnit3UpgraderProcessor extends SubJUnitUpgraderProcessor {
         final List<CtMethod<?>> setUps = classToProcess.getMethodsByName(SET_UP_METHOD_NAME);
         if (!setUps.isEmpty()) {
             final CtMethod<?> setUp = setUps.get(0);
-            Utils.replaceAnnotation(setUp, jupiterApiPackage, Utils.BEFORE_EACH_ANNOTATION_NAME, Utils.OVERRIDE_ANNOTATION_NAME);
+            Utils.replaceAnnotation(setUp, jupiterApiPackage, Utils.BEFORE_EACH_ANNOTATION_NAME, Utils.OVERRIDE_ANNOTATION_FULL_QUALIFIED_NAME);
         }
         final List<CtMethod<?>> tearDowns = classToProcess.getMethodsByName(TEAR_DOWN_METHOD_NAME);
         if (!tearDowns.isEmpty()) {
             final CtMethod<?> tearDown = tearDowns.get(0);
-            Utils.replaceAnnotation(tearDown, jupiterApiPackage, Utils.AFTER_EACH_ANNOTATION_NAME, Utils.OVERRIDE_ANNOTATION_NAME);
+            Utils.replaceAnnotation(tearDown, jupiterApiPackage, Utils.AFTER_EACH_ANNOTATION_NAME, Utils.OVERRIDE_ANNOTATION_FULL_QUALIFIED_NAME);
         }
 
         // add @Test to all test methods
         final Factory factory = classToProcess.getFactory();
-        final CtTypeReference annotationType = factory.createAnnotationType(jupiterApiPackage, Utils.JUNIT5_TEST_ANNOTATION_NAME).getReference();
+        final CtTypeReference annotationType = factory.createAnnotationType(jupiterApiPackage, Utils.TEST_ANNOTATION_NAME).getReference();
         final CtAnnotation<?> annotation = factory.createAnnotation(annotationType);
         classToProcess.getElements(new TypeFilter<>(CtMethod.class) {
             @Override

@@ -23,6 +23,7 @@ public class JUnitUpgraderProcessor extends AbstractProcessor<CtClass<?>> {
             new SubJUnit3UpgraderProcessor(jupiterApiPackage, jupiterApiPackageReference).process(ctClass);
             Utils.replaceAssertionsClass(ctClass, jupiterApiPackageReference, Utils.FULL_QUALIFIED_NAME_TESTCASE_NAME);
         } else {
+            new SubJUnit4UpgraderProcessor(jupiterApiPackage, jupiterApiPackageReference).process(ctClass);
             Utils.replaceAssertionsClass(ctClass, jupiterApiPackageReference, Utils.FULL_QUALIFIED_NAME_ASSERT_NAME);
         }
     }
