@@ -56,7 +56,7 @@ public class MainTest {
         final String inputPath = "src/test/resources/input/";
         final String outputPath = "spooned/input";
         final String oraclePath = "src/test/resources/oracle/";
-        Main.main(new String[] {"--input-path", inputPath});
+        Main.main(new String[] {"--input-path", inputPath, "--should-output"});
         final File inputFd = new File(inputPath);
         final List<String> inputFilenames = Arrays.stream(inputFd.listFiles()).map(File::getName).collect(Collectors.toList());
         for (File file : new File(outputPath).listFiles()) {
