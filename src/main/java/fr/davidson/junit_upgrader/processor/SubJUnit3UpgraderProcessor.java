@@ -67,7 +67,5 @@ public class SubJUnit3UpgraderProcessor extends SubJUnitUpgraderProcessor {
                 return candidate.getSimpleName().startsWith(Utils.PREFIX_TEST_JUNIT3);
             }
         }).forEach(testMethod -> testMethod.addAnnotation(annotation));
-
-        Utils.replaceAssertionsClass(classToProcess, jupiterApiPackageReference, Utils.FULL_QUALIFIED_NAME_TESTCASE_NAME);
     }
 }

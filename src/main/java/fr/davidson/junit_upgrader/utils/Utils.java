@@ -1,10 +1,14 @@
 package fr.davidson.junit_upgrader.utils;
 
+import spoon.reflect.code.CtBlock;
+import spoon.reflect.code.CtInvocation;
+import spoon.reflect.code.CtTypeAccess;
 import spoon.reflect.declaration.*;
 import spoon.reflect.factory.Factory;
-import spoon.reflect.reference.CtPackageReference;
 import spoon.reflect.reference.CtTypeReference;
 import spoon.reflect.visitor.filter.TypeFilter;
+
+import java.util.regex.Pattern;
 
 /**
  * @author Benjamin DANGLOT
@@ -75,22 +79,6 @@ public class Utils {
                         ctAnnotation -> ctAnnotation.replace(annotation),
                         () -> method.addAnnotation(annotation)
                 );
-    }
-
-    public static void replaceAssertionsClass(
-            CtClass<?> ctClass,
-            final CtPackageReference jupiterApiPackageReference,
-            final String fullQualifiedNameToReplace
-    ) {
-        ctClass.getElements(new TypeFilter<>(CtTypeReference.class) {
-            @Override
-            public boolean matches(CtTypeReference element) {
-                return fullQualifiedNameToReplace.equals(element.getQualifiedName());
-            }
-        }).forEach(ctTypeReference -> {
-            ctTypeReference.setSimpleName(Utils.ASSERTIONS_CLASS_NAME);
-            ctTypeReference.setPackage(jupiterApiPackageReference);
-        });
     }
 
 }
