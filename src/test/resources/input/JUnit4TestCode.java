@@ -1,6 +1,10 @@
 package input;
 
 import org.junit.*;
+import org.junit.function.ThrowingRunnable;
+
+import java.text.ParseException;
+import java.text.ParsePosition;
 
 import static org.junit.Assert.*;
 
@@ -50,6 +54,11 @@ public class JUnit4TestCode {
 
     @Test
     public void testToBeInherited() {
-
+        assertThrows(java.lang.IllegalStateException.class, new ThrowingRunnable() {
+            @Override
+            public void run() throws Throwable {
+                throw new IllegalStateException();
+            }
+        });
     }
 }

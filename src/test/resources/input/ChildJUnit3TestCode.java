@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ChildJUnit3TestCode extends JUnit3TestCode {
 
     public void testMethodTwo() {
-        assertTrue(true);
+        this.assertTrue("message", true);
     }
 
 }

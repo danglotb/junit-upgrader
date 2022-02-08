@@ -14,9 +14,9 @@ public class ChildJUnit4TestCode extends JUnit4TestCode {
     @Override
     public void testToBeInherited() {
         super.testToBeInherited();
-        assertTrue(true);
+        assertTrue("message", true);
         assertFalse(false);
-        assertEquals(0, 0);
+        assertEquals("message", 0, 0);
         try {
             throwException();
             fail();
@@ -27,7 +27,7 @@ public class ChildJUnit4TestCode extends JUnit4TestCode {
 
     @Test
     public void testChild() {
-        assertTrue(true);
+        assertTrue("message", true);
         assertFalse(false);
         assertEquals(0, 0);
         try {

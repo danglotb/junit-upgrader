@@ -9,9 +9,9 @@ public class ChildJUnit4TestCode extends input.JUnit4TestCode {
     @java.lang.Override
     public void testToBeInherited() {
         super.testToBeInherited();
-        org.junit.jupiter.api.Assertions.assertTrue(true);
+        org.junit.jupiter.api.Assertions.assertTrue(true, "message");
         org.junit.jupiter.api.Assertions.assertFalse(false);
-        org.junit.jupiter.api.Assertions.assertEquals(0, 0);
+        org.junit.jupiter.api.Assertions.assertEquals(0, 0, "message");
         try {
             throwException();
             org.junit.jupiter.api.Assertions.fail();
@@ -21,7 +21,7 @@ public class ChildJUnit4TestCode extends input.JUnit4TestCode {
 
     @org.junit.jupiter.api.Test
     public void testChild() {
-        org.junit.jupiter.api.Assertions.assertTrue(true);
+        org.junit.jupiter.api.Assertions.assertTrue(true, "message");
         org.junit.jupiter.api.Assertions.assertFalse(false);
         org.junit.jupiter.api.Assertions.assertEquals(0, 0);
         try {

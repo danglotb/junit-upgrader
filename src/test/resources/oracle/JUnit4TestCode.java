@@ -40,5 +40,11 @@ public class JUnit4TestCode {
 
     @org.junit.jupiter.api.Test
     public void testToBeInherited() {
+        org.junit.jupiter.api.Assertions.assertThrows(java.lang.IllegalStateException.class, new org.junit.jupiter.api.function.Executable() {
+            @java.lang.Override
+            public void execute() throws java.lang.Throwable {
+                throw new java.lang.IllegalStateException();
+            }
+        });
     }
 }
